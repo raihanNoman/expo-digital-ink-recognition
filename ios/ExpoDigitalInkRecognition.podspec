@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
   s.homepage       = package['homepage']
   s.platforms      = {
     :ios => '15.1',
-    :tvos => '15.1'
   }
   s.swift_version  = '5.9'
   s.source         = { git: 'https://github.com/raihanNoman/expo-digital-ink-recognition' }
@@ -20,10 +19,13 @@ Pod::Spec.new do |s|
 
   s.dependency 'ExpoModulesCore'
 
+  # ✅ MLKit Digital Ink
+  s.dependency 'GoogleMLKit/DigitalInkRecognition'
+
   # Swift/Objective-C compatibility
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
   }
 
-  s.source_files = "**/*.{h,m,mm,swift,hpp,cpp}"
+  s.source_files = "**/*.{h,m,mm,swift}"
 end

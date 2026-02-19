@@ -41,3 +41,12 @@ android {
     abortOnError false
   }
 }
+
+
+
+dependencies {
+  // ✅ ML Kit Digital Ink Recognition
+  implementation "com.google.mlkit:digital-ink-recognition:18.1.0"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3"
+}

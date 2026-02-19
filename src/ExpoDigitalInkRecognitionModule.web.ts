@@ -1,15 +1,28 @@
-import { registerWebModule, NativeModule } from 'expo';
+import { NativeModule, registerWebModule } from "expo";
+import type { ExpoDigitalInkRecognitionModule } from "./ExpoDigitalInkRecognition.types";
 
-import { ExpoDigitalInkRecognitionModuleEvents } from './ExpoDigitalInkRecognition.types';
-
-class ExpoDigitalInkRecognitionModule extends NativeModule<ExpoDigitalInkRecognitionModuleEvents> {
-  PI = Math.PI;
-  async setValueAsync(value: string): Promise<void> {
-    this.emit('onChange', { value });
+class ExpoDigitalInkRecognitionWeb
+  extends NativeModule<Record<never, never>>
+  implements ExpoDigitalInkRecognitionModule
+{
+  async downloadModel(): Promise<void> {
+    throw new Error("DigitalLink is not supported on web.");
   }
-  hello() {
-    return 'Hello world! 👋';
+
+  async getDownloadedModels(): Promise<string[]> {
+    throw new Error("DigitalLink is not supported on web.");
+  }
+
+  async deleteModel(): Promise<void> {
+    throw new Error("DigitalLink is not supported on web.");
+  }
+
+  async recognize(): Promise<any> {
+    throw new Error("DigitalLink is not supported on web.");
   }
 }
 
-export default registerWebModule(ExpoDigitalInkRecognitionModule, 'ExpoDigitalInkRecognitionModule');
+export default registerWebModule(
+  ExpoDigitalInkRecognitionWeb,
+  "ExpoDigitalInkRecognitionModule",
+);

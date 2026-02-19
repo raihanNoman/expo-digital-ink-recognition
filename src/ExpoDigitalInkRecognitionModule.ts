@@ -1,12 +1,7 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { requireNativeModule } from "expo";
 
-import { ExpoDigitalInkRecognitionModuleEvents } from './ExpoDigitalInkRecognition.types';
+import type { ExpoDigitalInkRecognitionModule as ExpoDigitalInkRecognitionModuleType } from "./ExpoDigitalInkRecognition.types";
 
-declare class ExpoDigitalInkRecognitionModule extends NativeModule<ExpoDigitalInkRecognitionModuleEvents> {
-  PI: number;
-  hello(): string;
-  setValueAsync(value: string): Promise<void>;
-}
-
-// This call loads the native module object from the JSI.
-export default requireNativeModule<ExpoDigitalInkRecognitionModule>('ExpoDigitalInkRecognition');
+export default requireNativeModule<ExpoDigitalInkRecognitionModuleType>(
+  "ExpoDigitalInkRecognition",
+);
