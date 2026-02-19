@@ -1,5 +1,11 @@
 import ExpoDigitalInkRecognition from "expo-digital-ink-recognition";
-import { Button, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Path, SketchCanvas } from "@sourcetoad/react-native-sketch-canvas";
@@ -11,9 +17,10 @@ function Canvas() {
   const canvasRef = useRef<SketchCanvas>(null);
   const [strokes, setStrokes] = useState<Point[][]>([]);
   const [result, setResult] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(strokes);
+    console.log("strokes registered:", strokes.length);
   }, [strokes]);
 
   // Called after each stroke
@@ -27,9 +34,12 @@ function Canvas() {
 
   // Check if drawing matches letter
   const checkLetter = async () => {
-    if (strokes.length === 0) return;
+    if (loading) return;
 
     try {
+      setLoading(true);
+      if (strokes.length === 0) throw "Strokes are empty. Draw a letter";
+
       // 1. Convert your Point[][] into InkStroke[] (which is InkPoint[])
       // We add a fake timestamp 't' because MLKit uses it for gesture velocity
       let currentTime = Date.now();
@@ -57,16 +67,19 @@ function Canvas() {
         formattedStrokes,
       );
 
-      console.log({ result });
-
       // 3. Display the top candidate
       if (result.candidates && result.candidates.length > 0) {
         setResult(`Result: ${result.candidates[0].text}`);
+        console.log("✅", result.candidates);
       } else {
         setResult("No match found");
+        alert("No Match Found");
       }
     } catch (error) {
       console.error("Recognition failed:", error);
+      alert(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -78,7 +91,7 @@ function Canvas() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Draw: </Text>
+      <Text style={styles.title}>Draw Arabic Letter</Text>
 
       <View style={{ flex: 1, flexDirection: "row" }}>
         <SketchCanvas
@@ -95,8 +108,12 @@ function Canvas() {
         />
       </View>
 
+      {loading && <ActivityIndicator />}
+
       <View style={styles.buttons}>
-        <Button title="Check" onPress={checkLetter} />
+        <View style={{ opacity: loading ? 0.4 : 1 }}>
+          <Button disabled={loading} title="Check" onPress={checkLetter} />
+        </View>
         <Button title="Clear" onPress={clearCanvas} />
       </View>
 
