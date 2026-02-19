@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-digital-ink-recognition": ["../src/index"],
+      "expo-digital-ink-recognition/*": ["../src/*"]
+    }
+  }
+}

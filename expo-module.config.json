@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["ExpoDigitalInkRecognitionModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.digitalinkrecognition.ExpoDigitalInkRecognitionModule"]
+  }
+}
